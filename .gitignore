@@ -1,3 +1,6 @@
+# Custom ignoring folders and files
+DevSearch-Theme
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

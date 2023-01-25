@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="auth">
+    <div class="card">
+        <div class="auth__header text-center">
+            <a href="{% url 'developers' %}">
+                <img src="{% static 'images/icon.svg' %}" alt="icon"/>
+            </a>
+            <h3>Account Login</h3>
+            <p>Hello Developer, Welcome Back!</p>
+        </div>
+
+        <form action="" class="form auth__form" method="post">
+            {% csrf_token %}
+            <div class="form__field">
+                <label for="username">Username: </label>
+                <input
+                        class="input input--text"
+                        id="username"
+                        type="text"
+                        name="username"
+                        placeholder="Enter your username..."
+                        autocomplete="off"
+                />
+            </div>
+
+            <!-- Input:Password -->
+            <div class="form__field">
+                <label for="password">Password: </label>
+                <input
+                        class="input input--password"
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder="••••••••"
+                        autocomplete="off"
+                />
+            </div>
+            <div class="auth__actions">
+                <input class="btn btn--sub btn--lg" type="submit" value="Log In"/>
+                <a href="forgetpassword.html">Forget Password?</a>
+            </div>
+        </form>
+        <div class="auth__alternative">
+            <p>Don’t have an Account?</p>
+            <a href="signup.html">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
