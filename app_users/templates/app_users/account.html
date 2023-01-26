@@ -8,7 +8,10 @@
             <div class="column column--1of3">
                 <div class="card text-center">
                     <div class="card__body dev">
-                        <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
+                        <a class="tag tag--pill tag--main settings__btn" href="{% url 'update_account' %}">
+                            <i class="bi bi-pencil-square"></i>
+                            Edit
+                        </a>
                         <img class="avatar avatar--xl dev__avatar"
                              src="{{ profile.photo.url }}"/>
                         <h2 class="dev__name">
@@ -108,7 +111,8 @@
                 </div>
                 <div class="settings">
                     <h3 class="settings__title">Skills</h3>
-                    <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create_skill' %}"><i class="im im-plus"></i> Add
+                    <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create_skill' %}"><i
+                            class="im im-plus"></i> Add
                         Skill</a>
                 </div>
 
@@ -122,9 +126,11 @@
                             </p>
                         </td>
                         <td class="settings__tableActions">
-                            <a class="tag tag--pill tag--main settings__btn" href="{% url 'update_skill' pk=skill.id %}"><i class="im im-edit"></i>
+                            <a class="tag tag--pill tag--main settings__btn"
+                               href="{% url 'update_skill' pk=skill.id %}"><i class="im im-edit"></i>
                                 Edit</a>
-                            <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete_skill' pk=skill.id %}"><i
+                            <a class="tag tag--pill tag--main settings__btn"
+                               href="{% url 'delete_skill' pk=skill.id %}"><i
                                     class="im im-x-mark-circle-o"></i>
                                 Delete</a>
                         </td>

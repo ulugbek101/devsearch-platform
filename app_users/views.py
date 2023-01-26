@@ -5,21 +5,12 @@ from django.urls import reverse_lazy, reverse
 
 from django.views.generic import CreateView, DetailView, TemplateView, UpdateView, DeleteView
 
-from .forms import SkillForm, UserRegistrationForm
+from .forms import SkillForm, UserRegistrationForm, UserAccountForm
 from .models import Skill, Profile
 
 
 def developers(request):
     return render(request, 'app_users/developers.html')
-
-
-# def user_account(request):
-#     profile = request.user.profile
-#
-#     context = {
-#         'profile': profile,
-#     }
-#     return render(request, 'app_users/account.html', context)
 
 
 class UserAccountView(TemplateView):
@@ -30,6 +21,27 @@ class UserAccountView(TemplateView):
         context = super(UserAccountView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user.profile
         return context
+
+
+def user_account_update(request):
+    profile = request.user.profile
+
+    if request.method == 'POST':
+        form = UserAccountForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Account has been successfully updated')
+            return redirect('account')
+        else:
+            messages.success(request, 'Form filled incorrectly')
+            return redirect('update_account')
+
+    form = UserAccountForm(instance=profile)
+    context = {
+        'btn_text': 'Update account',
+        'form': form,
+    }
+    return render(request, 'form_template.html', context)
 
 
 def user_login(request):
@@ -105,6 +117,16 @@ class SkillUpdateView(UpdateView):
         'btn_text': 'Update skill'
     }
 
+    def get(self, request, **kwargs):
+        try:
+            skill = self.request.user.profile.skill_set.get(id=kwargs['pk'])
+        except:
+            skill = None
+        if not skill:
+            messages.error(request, 'You cannot update other\'s skill')
+            return redirect('account')
+        return super(SkillUpdateView, self).get(request, **kwargs)
+
     def get_success_url(self):
         return reverse('account')
 
@@ -127,7 +149,6 @@ def skill_delete(request, pk):
         'obj_type': 'skill'
     }
     return render(request, 'delete_form.html', context)
-
 
 # class SkillDeleteView(DeleteView):
 #     model = Skill

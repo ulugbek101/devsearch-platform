@@ -37,6 +37,7 @@
 }
 
 input.input[type='text'],
+input.input[type='url'],
 input.input[type='email'],
 input.input[type='password'],
 input.input[type='number'],

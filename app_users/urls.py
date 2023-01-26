@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.developers, name='developers'),
 
     path('account/', views.UserAccountView.as_view(), name='account'),
+    path('update-account/', views.user_account_update, name='update_account'),
 
     path('create-skill/', views.SkillCreateView.as_view(), name='create_skill'),
     path('update-skill/<str:pk>/', views.SkillUpdateView.as_view(), name='update_skill'),
