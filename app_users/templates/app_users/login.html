@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="auth">
-    <div class="card">
+    <div class="card" style="position: absolute; top: 0;">
         <div class="auth__header text-center">
             <a href="{% url 'developers' %}">
                 <img src="{% static 'images/icon.svg' %}" alt="icon"/>
@@ -46,7 +46,7 @@
         </form>
         <div class="auth__alternative">
             <p>Don’t have an Account?</p>
-            <a href="signup.html">Sign Up</a>
+            <a href="{% url 'registration' %}">Sign Up</a>
         </div>
     </div>
 </div>

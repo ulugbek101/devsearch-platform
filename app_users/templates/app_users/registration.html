@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="auth">
+    <div class="card" style="position: absolute; top: 0;">
+        <div class="auth__header text-center">
+            <a href="{% url 'developers' %}">
+                <img src="{% static 'images/icon.svg' %}" alt="icon"/>
+            </a>
+            <h3>Account SignUp</h3>
+            <p>Create a new developer account</p>
+        </div>
+
+        <form action="" class="form auth__form" method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form__field">
+                <label for="id_{{ field.name }}">{{ field.label }}: </label>
+                {{ field }}
+            </div>
+            {% endfor %}
+
+            <div class="auth__actions">
+                <input class="btn btn--sub btn--lg" type="submit" value="Sign  In"/>
+            </div>
+
+        </form>
+        <div class="auth__alternative">
+            <p>Already have an Account?</p>
+            <a href="{% url 'login' %}">Log In</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
