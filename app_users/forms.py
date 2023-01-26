@@ -4,6 +4,8 @@ from django.contrib.auth import password_validation
 from django.utils.translation import gettext_lazy as _
 from django import forms
 
+from .models import Skill
+
 
 class UserRegistrationForm(UserCreationForm):
     password1 = forms.CharField(
@@ -38,3 +40,14 @@ class UserRegistrationForm(UserCreationForm):
                 'class': 'input',
                 'autocomplete': 'off',
             })
+
+
+class SkillForm(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fields = ['name', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super(SkillForm, self).__init__(* args, ** kwargs)
+        for _, field in self.fields.items():
+            field.widget.attrs.update({'class': 'input'})

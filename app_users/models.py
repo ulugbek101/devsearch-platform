@@ -30,6 +30,7 @@ class Profile(models.Model):
 
 
 class Skill(models.Model):
+    owner = models.ForeignKey(to=Profile, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField(null=True, blank=True)
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)
