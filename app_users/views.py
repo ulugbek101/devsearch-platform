@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
+from django.db.models import Q
 
 from django.urls import reverse_lazy, reverse
 
@@ -10,7 +11,16 @@ from .models import Skill, Profile
 
 
 def developers(request):
-    return render(request, 'app_users/developers.html')
+    # profiles = Profile.objects.all()
+    profiles = Profile.objects.exclude(
+        Q(short_intro="") |
+        Q(bio="") |
+        Q(fullname="")
+    ).order_by("created")
+    context = {
+        "profiles": profiles,
+    }
+    return render(request, 'app_users/developers.html', context)
 
 
 class UserAccountView(TemplateView):
@@ -20,6 +30,19 @@ class UserAccountView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(UserAccountView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user.profile
+
+        return context
+
+
+class ProfileView(TemplateView):
+    template_name = 'app_users/profile.html'
+    model = Profile
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['profile'] = self.request.user.profile
+        context['dev_skills'] = self.request.user.profile.skill_set.exclude(description="")
+        context['other_skills'] = self.request.user.profile.skill_set.filter(description="")
         return context
 
 

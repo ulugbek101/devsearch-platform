@@ -27,40 +27,35 @@
     <section class="devlist">
         <div class="container">
             <div class="grid grid--three">
-
+                {% for profile in profiles %}
                 <div class="column card">
                     <div class="dev">
-                        <a href="/profile.html" class="card__body">
+                        <a href="{% url 'profile' profile.id %}" class="card__body">
                             <div class="dev__profile">
-                                <img class="avatar avatar--md" src="https://avatars.githubusercontent.com/u/22437186"
-                                     alt="image"/>
+                                <img class="avatar avatar--md" src="{{ profile.photo.url }}"
+                                     alt="{{ profile.fullname }}"/>
                                 <div class="dev__meta">
-                                    <h3>Shahriar P. Shuvo</h3>
-                                    <h5>FullStack Web Designer & Developer</h5>
+                                    <h3>{% if profile.fullname %} {{ profile.fullname }} {% else %} {{
+                                        profile.user.username }} {% endif %}</h3>
+                                    <h5>{% if profile.short_intro %} {{ profile.short_intro }} {% endif %}</h5>
                                 </div>
                             </div>
                             <p class="dev__info">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate, ducimus inventore!
-                                Sunt,
-                                veniam veritatis? Veritatis placeat, deleniti iure tempore veniam perspiciatis, soluta
-                                cupiditate
-                                animi, exercitationem molestias nam doloremque architecto odit.
+                                {% if profile.bio %}
+                                {{ profile.bio|linebreaksbr }}
+                                {% endif %}
                             </p>
                             <div class="dev__skills">
-                  <span class="tag tag--pill tag--main">
-                    <small>JavaScript</small>
-                  </span>
+                                {% for skill in profile.skill_set.all|slice:"6" %}
                                 <span class="tag tag--pill tag--main">
-                    <small>React</small>
-                  </span>
-                                <span class="tag tag--pill tag--main">
-                    <small>SCSS</small>
-                  </span>
+                                    <small>{{ skill.name }}</small>
+                                </span>
+                                {% endfor %}
                             </div>
                         </a>
                     </div>
                 </div>
-
+                {% endfor %}
             </div>
         </div>
     </section>

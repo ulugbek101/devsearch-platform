@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="profile my-md">
+    <div class="container">
+        <div class="layout">
+            <div class="column column--1of3">
+                <div class="card text-center">
+                    <div class="card__body dev">
+                        <img class="avatar avatar--xl" src="{{ profile.photo.url }}"/>
+                        <h2 class="dev__name">
+                            {% if profile.fullname %}
+                            {{ user.profile.fullname }}
+                            {% else %}
+                            {{ profile.user.username }}
+                            {% endif %}</h2>
+                        <p class="dev__title">{% if profile.short_intro %} {{ profile.short_intro }} {% endif %}</p>
+                        <p class="dev__location">
+                            {% if profile.location %}
+                            Based in {{ profile.location }}
+                            {% endif %}</p>
+                        <ul class="dev__social">
+                            {% if profile.social_github %}
+                            <li>
+                                <a title="Github" href="#" target="_blank">
+                                    <i class="bi bi-github"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if profile.social_stackoverflow %}
+                            <li>
+                                <a title="Stackoverflow" href="{{ profile.social_stackoverflow }}" target="_blank">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-stack-overflow" viewBox="0 0 16 16">
+                                        <path d="M12.412 14.572V10.29h1.428V16H1v-5.71h1.428v4.282h9.984z"/>
+                                        <path d="M3.857 13.145h7.137v-1.428H3.857v1.428zM10.254 0 9.108.852l4.26 5.727 1.146-.852L10.254 0zm-3.54 3.377 5.484 4.567.913-1.097L7.627 2.28l-.914 1.097zM4.922 6.55l6.47 3.013.603-1.294-6.47-3.013-.603 1.294zm-.925 3.344 6.985 1.469.294-1.398-6.985-1.468-.294 1.397z"/>
+                                    </svg>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if profile.social_twitter %}
+                            <li>
+                                <a title="Twitter" href="{{ profile.social_twitter }}" target="_blank">
+                                    <i class="bi bi-twitter"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if profile.social_linkedin %}
+                            <li>
+                                <a title="LinkedIn" href="{{ profile.social_linkedin }}" target="_blank">
+                                    <i class="bi bi-linkedin"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if profile.social_facebook %}
+                            <li>
+                                <a title="Facebook" href="{{ profile.social_facebook }}" target="_blank">
+                                    <i class="bi bi-facebook"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if profile.social_instagram %}
+                            <li>
+                                <a title="Instagram" href="{{ profile.social_instagram }}" target="_blank">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if profile.social_telegram %}
+                            <li>
+                                <a title="Telegram" href="{{ profile.social_telegram }}" target="_blank">
+                                    <i class="bi bi-telegram"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if profile.social_website %}
+                            <li>
+                                <a title="Personal Website" href="{{ profile.social_website }}" target="_blank">
+                                    <i class="bi bi-globe"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if profile.social_youtube %}
+                            <li>
+                                <a title="Youtube" href="{{ profile.social_youtube }}" target="_blank">
+                                    <i class="bi bi-youtube"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                        <a href="#" class="btn btn--sub btn--lg">Send Message </a>
+                    </div>
+                </div>
+            </div>
+            <div class="column column--2of3">
+                <div class="devInfo">
+                    <h3 class="devInfo__title">About Me</h3>
+                    <p class="devInfo__about">
+                        {% if profile.bio %}
+                        {{ profile.bio|linebreaksbr }}
+                        {% else %}
+                        No Bio
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="devInfo">
+                    <h3 class="devInfo__title">Skills</h3>
+                    <div class="devInfo__skills">
+                        {% for skill in dev_skills %}
+                        <div class="devSkill">
+                            <h4 class="devSkill__title">{{ skill.name }}</h4>
+                            <p class="devSkill__info">
+                                {{ skill.description|linebreaksbr }}
+                            </p>
+                        </div>
+                        {% endfor %}
+                        <h3 class="devInfo__subtitle">Other Skills</h3>
+                        <div class="devInfo__otherSkills">
+                            {% for skill in other_skills %}
+                            <span class="tag tag--pill tag--sub tag--lg">
+                                  <small>{{ skill.name }}</small>
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="devInfo">
+                    <h3 class="devInfo__title">Projects</h3>
+                    <div class="grid grid--two">
+
+                        <div class="column">
+                            <div class="card project">
+                                <a href="single-project.html" class="project">
+                                    <img class="project__thumbnail" src="images/project-b.png" alt="project thumbnail"/>
+                                    <div class="card__body">
+                                        <h3 class="project__title">DevSearch UI Design</h3>
+                                        <p><a class="project__author" href="profile.html">By Shahriar P. Shuvo</a></p>
+                                        <p class="project--rating">
+                                            <span style="font-weight: bold;">92%</span> Postitive
+                                            Feedback (62 Votes)
+                                        </p>
+                                        <div class="project__tags">
+                        <span class="tag tag--pill tag--main">
+                          <small>NextJS</small>
+                        </span>
+                                            <span class="tag tag--pill tag--main">
+                          <small>GraphQL</small>
+                        </span>
+                                            <span class="tag tag--pill tag--main">
+                          <small>TypeScript</small>
+                        </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="card project">
+                                <a href="single-project.html" class="project">
+                                    <img class="project__thumbnail" src="images/project-c.png" alt="project thumbnail"/>
+                                    <div class="card__body">
+                                        <h3 class="project__title">Another Landing Page</h3>
+                                        <p><a class="project__author" href="profile.html">By Dennis Ivanov</a></p>
+                                        <p class="project--rating">
+                                            <span style="font-weight: bold;">36%</span> Postitive
+                                            Feedback (18 Votes)
+                                        </p>
+                                        <div class="project__tags">
+                        <span class="tag tag--pill tag--main">
+                          <small>NextJS</small>
+                        </span>
+                                            <span class="tag tag--pill tag--main">
+                          <small>GraphQL</small>
+                        </span>
+                                            <span class="tag tag--pill tag--main">
+                          <small>TypeScript</small>
+                        </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="card project">
+                                <a href="single-project.html" class="project">
+                                    <img class="project__thumbnail" src="images/project-a.png" alt="project thumbnail"/>
+                                    <div class="card__body">
+                                        <h3 class="project__title">Yoga Studio Landing Page Website and Design</h3>
+                                        <p><a class="project__author" href="profile.html">By Dennis Ivanov</a></p>
+                                        <p class="project--rating">
+                                            <span style="font-weight: bold;">98%</span> Postitive
+                                            Feedback (72 Votes)
+                                        </p>
+                                        <div class="project__tags">
+                        <span class="tag tag--pill tag--main">
+                          <small>NextJS</small>
+                        </span>
+                                            <span class="tag tag--pill tag--main">
+                          <small>GraphQL</small>
+                        </span>
+                                            <span class="tag tag--pill tag--main">
+                          <small>TypeScript</small>
+                        </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}
