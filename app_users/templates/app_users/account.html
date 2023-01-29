@@ -94,7 +94,6 @@
                             </li>
                             {% endif %}
                         </ul>
-                        <a href="#" class="btn btn--sub btn--lg">Send Message </a>
                     </div>
                 </div>
             </div>
@@ -111,27 +110,28 @@
                 </div>
                 <div class="settings">
                     <h3 class="settings__title">Skills</h3>
-                    <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create_skill' %}"><i
-                            class="im im-plus"></i> Add
-                        Skill</a>
+                    <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create_skill' %}">
+                        <i class="bi bi-plus-lg"></i>
+                        Add Skill</a>
                 </div>
 
                 <table class="settings__table">
                     {% for skill in profile.skill_set.all %}
                     <tr>
                         <td class="settings__tableInfo">
-                            <h4>{{ skill.name }}</h4>
+                            <h4>{{ skill.name|capfirst }}</h4>
                             <p>
                                 {{ skill.description|linebreaksbr }}
                             </p>
                         </td>
                         <td class="settings__tableActions">
                             <a class="tag tag--pill tag--main settings__btn"
-                               href="{% url 'update_skill' pk=skill.id %}"><i class="im im-edit"></i>
+                               href="{% url 'update_skill' pk=skill.id %}">
+                                <i class="bi bi-pencil-square"></i>
                                 Edit</a>
                             <a class="tag tag--pill tag--main settings__btn"
-                               href="{% url 'delete_skill' pk=skill.id %}"><i
-                                    class="im im-x-mark-circle-o"></i>
+                               href="{% url 'delete_skill' pk=skill.id %}">
+                                <i class="bi bi-trash-fill"></i>
                                 Delete</a>
                         </td>
                     </tr>
@@ -142,27 +142,29 @@
 
                 <div class="settings">
                     <h3 class="settings__title">Projects</h3>
-                    <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#"><i class="im im-plus"></i> Add
-                        Project</a>
+                    <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'project_create' %}">
+                        <i class="bi bi-plus-lg"></i>
+                        Add Project</a>
                 </div>
 
                 <table class="settings__table">
                     {% for project in profile.project_set.all %}
                     <tr>
                         <td class="settings__thumbnail">
-                            <a href="single-project.html"><img src="{{ project.photo.url }}" alt="{{ project.name }}"/></a>
+                            <a href="{% url 'project_detail' project.id %}"><img src="{{ project.photo.url }}" alt="{{ project.name }}"/></a>
                         </td>
                         <td class="settings__tableInfo">
-                            <a href="single-project.html">{{ project.name }}</a>
+                            <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
                             <p>
                                 {{ project.description|linebreaksbr }}
                             </p>
                         </td>
                         <td class="settings__tableActions">
-                            <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i>
+                            <a class="tag tag--pill tag--main settings__btn" href="{% url 'project_update' project.id %}">
+                                <i class="bi bi-pencil-square"></i>
                                 Edit</a>
-                            <a class="tag tag--pill tag--main settings__btn" href="#"><i
-                                    class="im im-x-mark-circle-o"></i>
+                            <a class="tag tag--pill tag--main settings__btn" href="{% url 'project_delete' project.id %}">
+                                <i class="bi bi-trash-fill"></i>
                                 Delete</a>
                         </td>
                     </tr>

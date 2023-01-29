@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # 3rd package apps
+    # for static files
     'whitenoise',
 
     # Custom Apps

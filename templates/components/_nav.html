@@ -12,7 +12,7 @@
             </label>
             <ul class="header__menu">
                 <li class="header__menuItem"><a href="{% url 'developers' %}">Developers</a></li>
-                <li class="header__menuItem"><a href="projects.html">Projects</a></li>
+                <li class="header__menuItem"><a href="{% url 'projects' %}">Projects</a></li>
                 {% if request.user.is_authenticated %}
                 <li class="header__menuItem"><a href="inbox.html">Inbox</a></li>
                 <li class="header__menuItem"><a href="{% url 'account' %}">Account</a></li>

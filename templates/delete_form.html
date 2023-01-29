@@ -14,7 +14,10 @@
                 {% csrf_token %}
                 <p>Are your sure you want to delete this "{{ obj_name }}" {{ obj_type }} ?</p>
                 <a class="btn btn--sub btn--lg  my-md" href="{{ request.META.HTTP_REFERER }}">&#x2190 Go Back</a>
-                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Delete {{ obj_type }}"/>
+                <button type="submit" class="btn btn--sub btn--lg my-md">
+                    <i class="bi bi-trash-fill"></i>
+                    Delete {{ obj_type }}
+                </button>
             </form>
         </div>
     </div>

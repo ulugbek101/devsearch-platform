@@ -89,7 +89,13 @@
                             </li>
                             {% endif %}
                         </ul>
-                        <a href="#" class="btn btn--sub btn--lg">Send Message </a>
+                        <a href="" class="btn btn--sub btn--lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-send-fill" viewBox="0 0 16 16">
+                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                            </svg>
+                            Send Message
+                        </a>
                     </div>
                 </div>
             </div>
@@ -109,7 +115,7 @@
                     <div class="devInfo__skills">
                         {% for skill in dev_skills %}
                         <div class="devSkill">
-                            <h4 class="devSkill__title">{{ skill.name }}</h4>
+                            <h4 class="devSkill__title">{{ skill.name|capfirst }}</h4>
                             <p class="devSkill__info">
                                 {{ skill.description|linebreaksbr }}
                             </p>
@@ -119,7 +125,7 @@
                         <div class="devInfo__otherSkills">
                             {% for skill in other_skills %}
                             <span class="tag tag--pill tag--sub tag--lg">
-                                  <small>{{ skill.name }}</small>
+                                  <small>{{ skill.name|capfirst }}</small>
                             </span>
                             {% endfor %}
                         </div>
@@ -129,86 +135,32 @@
                     <h3 class="devInfo__title">Projects</h3>
                     <div class="grid grid--two">
 
+                        {% for project in profile.project_set.all %}
                         <div class="column">
                             <div class="card project">
-                                <a href="single-project.html" class="project">
-                                    <img class="project__thumbnail" src="images/project-b.png" alt="project thumbnail"/>
+                                <a href="{% url 'project_detail' project.id %}" class="project" style="width: 100%;">
+                                    <img class="project__thumbnail" src="{{ project.photo.url }}"
+                                         alt="{{ project.name }}"/>
                                     <div class="card__body">
-                                        <h3 class="project__title">DevSearch UI Design</h3>
-                                        <p><a class="project__author" href="profile.html">By Shahriar P. Shuvo</a></p>
+                                        <h3 class="project__title">{{ project.name }}</h3>
+                                        <p><a class="project__author" href="{% url 'profile' project.owner.id %}">By
+                                            {{ project.owner.fullname }}</a></p>
                                         <p class="project--rating">
                                             <span style="font-weight: bold;">92%</span> Postitive
                                             Feedback (62 Votes)
                                         </p>
                                         <div class="project__tags">
-                        <span class="tag tag--pill tag--main">
-                          <small>NextJS</small>
-                        </span>
+                                            {% for tag in project.tags.all %}
                                             <span class="tag tag--pill tag--main">
-                          <small>GraphQL</small>
-                        </span>
-                                            <span class="tag tag--pill tag--main">
-                          <small>TypeScript</small>
-                        </span>
+                                              <small>{{ tag.name|capfirst }}</small>
+                                            </span>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </a>
                             </div>
                         </div>
-
-                        <div class="column">
-                            <div class="card project">
-                                <a href="single-project.html" class="project">
-                                    <img class="project__thumbnail" src="images/project-c.png" alt="project thumbnail"/>
-                                    <div class="card__body">
-                                        <h3 class="project__title">Another Landing Page</h3>
-                                        <p><a class="project__author" href="profile.html">By Dennis Ivanov</a></p>
-                                        <p class="project--rating">
-                                            <span style="font-weight: bold;">36%</span> Postitive
-                                            Feedback (18 Votes)
-                                        </p>
-                                        <div class="project__tags">
-                        <span class="tag tag--pill tag--main">
-                          <small>NextJS</small>
-                        </span>
-                                            <span class="tag tag--pill tag--main">
-                          <small>GraphQL</small>
-                        </span>
-                                            <span class="tag tag--pill tag--main">
-                          <small>TypeScript</small>
-                        </span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="column">
-                            <div class="card project">
-                                <a href="single-project.html" class="project">
-                                    <img class="project__thumbnail" src="images/project-a.png" alt="project thumbnail"/>
-                                    <div class="card__body">
-                                        <h3 class="project__title">Yoga Studio Landing Page Website and Design</h3>
-                                        <p><a class="project__author" href="profile.html">By Dennis Ivanov</a></p>
-                                        <p class="project--rating">
-                                            <span style="font-weight: bold;">98%</span> Postitive
-                                            Feedback (72 Votes)
-                                        </p>
-                                        <div class="project__tags">
-                        <span class="tag tag--pill tag--main">
-                          <small>NextJS</small>
-                        </span>
-                                            <span class="tag tag--pill tag--main">
-                          <small>GraphQL</small>
-                        </span>
-                                            <span class="tag tag--pill tag--main">
-                          <small>TypeScript</small>
-                        </span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                        {% endfor %}
 
                     </div>
                 </div>
