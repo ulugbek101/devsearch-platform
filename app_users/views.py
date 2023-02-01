@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from django.urls import reverse_lazy, reverse
 
 from django.views.generic import CreateView, DetailView, TemplateView, UpdateView, DeleteView
 
-from .forms import SkillForm, UserRegistrationForm, UserAccountForm
-from .models import Skill, Profile
+from .forms import SkillForm, UserRegistrationForm, UserAccountForm, MessageForm
+from .models import Skill, Profile, Message
 
 
 def developers(request):
@@ -23,6 +24,56 @@ def developers(request):
     return render(request, 'app_users/developers.html', context)
 
 
+@login_required(login_url='login')
+def inbox(request):
+    profile = request.user.profile
+    context = {
+        'unread_messages': profile.messages.filter(is_read=False).count(),
+        'recieved_messages': profile.messages.all(),
+    }
+    return render(request, 'app_users/inbox.html', context)
+
+
+def send_message(request, pk):
+    recipient = Profile.objects.get(id=pk)
+    if request.user.is_authenticated:
+        is_authenticated = True
+        profile = request.user.profile
+    else:
+        is_authenticated = False
+        profile = None
+    
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = profile if is_authenticated else None
+            message.recipient = recipient
+            message.fullname = profile.fullname if is_authenticated else request.POST.get('fullname')
+            message.email = profile.fullname if is_authenticated else request.POST.get('email')
+            message.save()
+            messages.success(request, 'Message sent')
+            return redirect('profile', pk=pk)
+        else:
+            messages.error(request, 'Form filled incorrectly')
+            return redirect('send_message', pk=pk)
+        
+    form = MessageForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'app_users/send_message.html', context)
+
+
+def message_detail(request, pk):
+    message = Message.objects.get(id=pk)
+    message.is_read = True
+    message.save()
+    context = {
+        'message': Message.objects.get(id=pk),
+    }
+    return render(request, 'app_users/message_detail.html', context)
+
 class UserAccountView(TemplateView):
     template_name = 'app_users/account.html'
     model = Profile
@@ -34,18 +85,19 @@ class UserAccountView(TemplateView):
         return context
 
 
-class ProfileView(TemplateView):
-    template_name = 'app_users/profile.html'
-    model = Profile
+def user_profile(request, pk):
+    profile = Profile.objects.get(id=pk)
+    
+    context = {
+        'profile': profile,
+        'dev_skills': profile.skill_set.exclude(description=""),
+        'other_skills': profile.skill_set.filter(description=""),
+        
+    }
+    return render(request, 'app_users/profile_detail.html', context)
 
-    def get_context_data(self, **kwargs):
-        context = super(ProfileView, self).get_context_data(**kwargs)
-        context['profile'] = self.request.user.profile
-        context['dev_skills'] = self.request.user.profile.skill_set.exclude(description="")
-        context['other_skills'] = self.request.user.profile.skill_set.filter(description="")
-        return context
 
-
+@login_required(login_url='login')
 def user_account_update(request):
     profile = request.user.profile
 
@@ -158,6 +210,7 @@ class SkillUpdateView(UpdateView):
         return super(SkillUpdateView, self).form_valid(form)
 
 
+@login_required(login_url='login')
 def skill_delete(request, pk):
     profile = request.user.profile
     skill = profile.skill_set.get(pk=pk)
@@ -172,22 +225,3 @@ def skill_delete(request, pk):
         'obj_type': 'skill'
     }
     return render(request, 'delete_form.html', context)
-
-# class SkillDeleteView(DeleteView):
-#     model = Skill
-#     template_name = 'delete_form.html'
-#
-#     def get_success_url(self):
-#         return reverse('account')
-#
-#     def post(self, request, *args, **kwargs):
-#         messages.success(self.request, 'Skill successfully deleted')
-#         return super(SkillDeleteView, self).post(request, *args, **kwargs)
-#
-#     # TODO The problem here is that I cannot identify wether a user deleting his own skill or not
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(SkillDeleteView, self).get_context_data(**kwargs)
-#         context['obj_name'] = Skill.objects.get(id=kwargs['id']).name
-#         context['obj_type'] = 'skill'
-#         return context

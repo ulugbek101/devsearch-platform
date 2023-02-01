@@ -2,10 +2,10 @@
 <header class="header">
     <div class="container container--narrow">
         <a href="{% url 'developers' %}" class="header__logo">
-            <img src="{% static 'images/logo.svg' %}" alt="DevSearch Logo"/>
+            <img src="{% static 'images/logo.svg' %}" alt="DevSearch Logo" />
         </a>
         <nav class="header__nav">
-            <input type="checkbox" id="responsive-menu"/>
+            <input type="checkbox" id="responsive-menu" />
             <label for="responsive-menu" class="toggle-menu">
                 <span>Menu</span>
                 <div class="toggle-menu__lines"></div>
@@ -14,7 +14,7 @@
                 <li class="header__menuItem"><a href="{% url 'developers' %}">Developers</a></li>
                 <li class="header__menuItem"><a href="{% url 'projects' %}">Projects</a></li>
                 {% if request.user.is_authenticated %}
-                <li class="header__menuItem"><a href="inbox.html">Inbox</a></li>
+                <li class="header__menuItem"><a href="{% url 'inbox' %}">Inbox</a></li>
                 <li class="header__menuItem"><a href="{% url 'account' %}">Account</a></li>
                 <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
                 {% else %}

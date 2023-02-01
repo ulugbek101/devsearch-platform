@@ -4,7 +4,7 @@ from django.contrib.auth import password_validation
 from django.utils.translation import gettext_lazy as _
 from django import forms
 
-from .models import Skill, Profile
+from .models import Skill, Profile, Message
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -73,3 +73,21 @@ class SkillForm(forms.ModelForm):
                 'class': 'input',
                 'autofocus': 'true',
             })
+
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['fullname', 'email', 'subject', 'body']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for _, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'input',
+                'autofocus': 'true',
+                'autocomplete': 'off',
+                'required': 'true',
+            })
+        

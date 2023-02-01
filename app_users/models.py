@@ -43,3 +43,25 @@ class Skill(models.Model):
         unique_together = [
             ['owner', 'name']
         ]
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(to=Profile, on_delete=models.SET_NULL, null=True)
+    recipient = models.ForeignKey(to=Profile, on_delete=models.CASCADE, related_name='messages')
+    email = models.EmailField(null=True, max_length=200, blank=True)
+    fullname = models.CharField(null=True, max_length=200, blank=True)
+    subject = models.CharField(max_length=200)
+    body = models.TextField()
+    is_read = models.BooleanField(default=False)
+    
+    id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.fullname} - {self.recipient.fullname}'
+
+    class Meta:
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
+        ordering = ('is_read', '-created', 'subject')

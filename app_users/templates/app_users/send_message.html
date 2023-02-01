@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="{{ request.META.HTTP_REFERER }}">
+                &#8592;
+            </a>
+            <br>
+
+            <form class="form" method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if not request.user.is_authenticated %}
+                <div class="form__field">
+                    <label for="id_{{ form.fullname.name }}">{{ form.fullname.label }}: </label>
+                    {{ form.fullname }}
+                </div>
+                <div class="form__field">
+                    <label for="id_{{ form.email.name }}">{{ form.email.label }}: </label>
+                    {{ form.email }}
+                </div>
+                {% endif %}
+
+                <div class="form__field">
+                    <label for="id_{{ form.subject.name }}">{{ form.subject.label }}: </label>
+                    {{ form.subject }}
+                </div>
+                <div class="form__field">
+                    <label for="id_{{ form.body.name }}">{{ form.body.label }}: </label>
+                    {{ form.body }}
+                </div>
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Send message" />
+            </form>
+
+        </div>
+    </div>
+</main>
+
+{% endblock %}
