@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="{{ request.META.HTTP_REFERER }}">
+                &#8592;
+            </a>
+            <br>
+
+            <form class="form" method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="form__field">
+                    <label for="id_{{ field.name }}">{{ field.label }}: </label>
+                    {{ field }}
+                </div>
+                {% endfor %}
+
+                <div class="form__field">
+                    <label for="id_tags">Tags: </label>
+                    <div class="project__tags">
+                        {% for tag in project.tags.all %}
+                        <span class="tag tag--pill tag--main">
+                            <small data-project="{{ project.id }}" data-tag="{{ tag.id }}">
+                                {{ tag.name|capfirst }}
+                                <i class="bi bi-x-lg"></i>
+                            </small>
+                        </span>
+                        {% endfor %}
+                    </div>
+                    <input class="input" type="text" name="tags" id="id_tags"
+                        placeholder="Enter tag name and hit space or comma" data-project="{{ project.id }}">
+                </div>
+
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="{{ btn_text }}" />
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

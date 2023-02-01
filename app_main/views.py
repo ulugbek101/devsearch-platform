@@ -65,8 +65,9 @@ def project_update(request, pk):
     context = {
         'form': form,
         'btn_text': 'Update project',
+        'project': project,
     }
-    return render(request, 'form_template.html', context)
+    return render(request, 'app_main/project_update.html', context)
 
 
 @login_required(login_url='login')

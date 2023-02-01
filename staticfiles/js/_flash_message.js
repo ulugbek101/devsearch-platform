@@ -9,6 +9,6 @@ const flashMessage = function () {
     }
 }
 
-export default flashMessage
+export default flashMessage;
 
 
