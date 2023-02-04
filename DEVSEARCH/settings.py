@@ -17,7 +17,7 @@ SECRET_KEY = env.get('DJANGO_SECRET_KEY', "django-insecure-b9$ipn31xqwp)sdz^+2xf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.get('DEBUG', True)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', f"{env.get('ALLOWED_HOST')}"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'dev-search.up.railway.app']
 CSRF_TRUSTED_ORIGINS = [
     env.get('CSRF_TRUSTED_ORIGIN'),
 ]
