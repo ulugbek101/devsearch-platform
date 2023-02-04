@@ -19,7 +19,7 @@ DEBUG = env.get('DEBUG', True)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', env.get('CSRF_TRUSTED_ORIGIN')]
 CSRF_TRUSTED_ORIGINS = [
-    env.get('CSRF_TRUSTED_ORIGIN'),
+    f"https://{env.get('CSRF_TRUSTED_ORIGIN')}",
 ]
 
 # Application definition
