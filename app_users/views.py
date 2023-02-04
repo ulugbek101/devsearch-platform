@@ -14,7 +14,6 @@ from .models import Skill, Profile, Message
 def developers(request):
     # profiles = Profile.objects.all()
     profiles = Profile.objects.exclude(
-        Q(user__id=request.user.id) |
         Q(fullname=None) |
         Q(fullname="") |
         Q(short_intro=None) |
@@ -24,6 +23,7 @@ def developers(request):
         Q(location=None) |
         Q(location="")
     ).order_by("created")
+
     context = {
         "profiles": profiles,
     }
