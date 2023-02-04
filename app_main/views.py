@@ -40,6 +40,17 @@ def project_create(request):
 def project_detail(request, pk):
     project = models.Project.objects.get(id=pk)
 
+    if request.method == 'POST':
+        profile = request.user.profile
+        form = forms.ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.owner = profile
+            review.project = project
+            review.save()
+            messages.success(request, 'Successfully commented')
+            return redirect('project_detail', pk=pk)
+
     context = {
         'project': project,
     }

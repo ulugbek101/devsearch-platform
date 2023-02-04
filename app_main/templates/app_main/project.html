@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -48,58 +49,55 @@
                     {% endif %}
                 </div>
 
+                {% if request.user.is_authenticated %}
                 <div class="comments">
                     <h3 class="singleProject__subtitle">Feedback</h3>
-                    <h5 class="project--rating">
-                        36% Postitive Feedback (18 Votes)
-                    </h5>
+<!--                    <h5 class="project&#45;&#45;rating">-->
+<!--                        36% Postitive Feedback (18 Votes)-->
+<!--                    </h5>-->
 
-                    <form class="form" action="#" method="POST">
-                        <!-- Textarea -->
+                    <form class="form" action="{% url 'project_detail' pk=project.id %}" method="POST">
+                        {% csrf_token %}
                         <div class="form__field">
                             <label for="formInput#textarea">Comments: </label>
-                            <textarea class="input input--textarea" name="message" id="formInput#textarea"
-                                placeholder="Write your comments here..."></textarea>
+                            <textarea class="input input--textarea" name="text" id="formInput#textarea"
+                                placeholder="Write your comments here..." required></textarea>
                         </div>
                         <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
                     </form>
+
                     <div class="commentList">
+                        {% for comment in project.review_set.all %}
                         <div class="comment">
-                            <a href="profile.html">
-                                <img class="avatar avatar--md"
-                                    src="https://pbs.twimg.com/profile_images/1335382240931368961/b3wSZKj4_400x400.jpg"
-                                    alt="user" />
+                            <a href="{% if comment.owner %} {% url 'profile' pk=comment.owner.id %} {% endif %}">
+                                <img class="avatar avatar--md" src="{% if comment.owner %} {{ comment.owner.photo.url }} {% else %} {% static 'images/user-default.png' %} {% endif %}"
+                                    alt="{% if comment.profile %} {{ comment.owner.fullname }} {% else %} Deleted Account {% endif %}" />
                             </a>
                             <div class="comment__details">
-                                <a href="profile.html" class="comment__author">Sulamita Ivanov</a>
+                                <a href="{% if comment.owner %} {% url 'profile' comment.owner.id %} {% endif %}" class="comment__author">
+                                    {% if comment.owner %}
+                                    {{ comment.owner.fullname }}
+                                    {% else %}
+                                    Deleted Account
+                                    {% endif %}
+                                </a>
                                 <p class="comment__info">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit alias numquam
-                                    perferendis
-                                    mollitia minus minima exercitationem possimus ab deserunt qui, soluta iusto
-                                    doloribus eveniet
-                                    similique consequuntur ratione, dignissimos ut magni laborum quo.
+                                    {{ comment.text|linebreaksbr }}
                                 </p>
                             </div>
                         </div>
-                        <div class="comment">
-                            <a href="profile.html">
-                                <img class="avatar avatar--md" src="https://avatars.githubusercontent.com/u/33843378"
-                                    alt="user" />
-                            </a>
-                            <div class="comment__details">
-                                <a href="profile.html" class="comment__author">Dennis Ivanov</a>
-                                <p class="comment__info">
-                                    Consectetur adipisicing elit. Reprehenderit alias numquam perferendis mollitia minus
-                                    minima
-                                    exercitationem possimus ab deserunt qui, ratione, dignissimos ut magni laborum quo.
-                                </p>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% else %}
+                <br>
+                <hr>
+                <br>
+                <small>Please <a href="{% url 'login' %}">Log In</a> to leave a comment</small>
+                {% endif %}
+
             </div>
         </div>
-    </div>
     </div>
 </main>
 

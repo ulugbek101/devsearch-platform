@@ -12,7 +12,7 @@ class Project(models.Model):
     photo = models.ImageField(default='project-default.jpg', upload_to='projects/')
     demo_link = models.URLField(max_length=2000, null=True, blank=True)
     source_link = models.URLField(max_length=2000, null=True, blank=True)
-    tags = models.ManyToManyField(to='Tag', null=True, blank=True)
+    tags = models.ManyToManyField(to='Tag')
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -40,6 +40,9 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ('-created',)
+
 
 class Review(models.Model):
     owner = models.ForeignKey(to=Profile, on_delete=models.SET_NULL, null=True)
@@ -53,7 +56,7 @@ class Review(models.Model):
         return f'{self.owner.fullname} - {self.project}'
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('-created',)
 
 
 # class Vote(models.Model):

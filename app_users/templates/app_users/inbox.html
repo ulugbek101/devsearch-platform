@@ -15,6 +15,7 @@
                     <span class="message__subject">{{ message.subject }}</span>
                     <span class="message__date">
                         {{ message.created|date:"M d, Y, H:i" }}
+                        <br>
                         <small>{{ message.created|timesince }} ago</small>
                     </span>
                 </a>

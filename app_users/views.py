@@ -14,9 +14,15 @@ from .models import Skill, Profile, Message
 def developers(request):
     # profiles = Profile.objects.all()
     profiles = Profile.objects.exclude(
+        Q(user__id=request.user.id) |
+        Q(fullname=None) |
+        Q(fullname="") |
+        Q(short_intro=None) |
         Q(short_intro="") |
+        Q(bio=None) |
         Q(bio="") |
-        Q(fullname="")
+        Q(location=None) |
+        Q(location="")
     ).order_by("created")
     context = {
         "profiles": profiles,
@@ -42,7 +48,7 @@ def send_message(request, pk):
     else:
         is_authenticated = False
         profile = None
-    
+
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -57,7 +63,7 @@ def send_message(request, pk):
         else:
             messages.error(request, 'Form filled incorrectly')
             return redirect('send_message', pk=pk)
-        
+
     form = MessageForm()
     context = {
         'form': form,
@@ -74,25 +80,31 @@ def message_detail(request, pk):
     }
     return render(request, 'app_users/message_detail.html', context)
 
-class UserAccountView(TemplateView):
-    template_name = 'app_users/account.html'
-    model = Profile
 
-    def get_context_data(self, **kwargs):
-        context = super(UserAccountView, self).get_context_data(**kwargs)
-        context['profile'] = self.request.user.profile
+def account(request):
+    user_account = request.user.profile
 
-        return context
+    if user_account.fullname == "" or user_account.fullname is None or \
+            user_account.short_intro == "" or user_account.short_intro is None or \
+            user_account.bio == "" or user_account.bio is None or \
+            user_account.location == "" or user_account.location is None:
+        messages.warning(request, 'Provide your fullname, occupation, location and bio, otherwise you will not be'
+                                  ' shown on search results or anywhere else')
+
+    context = {
+        'profile': user_account
+    }
+    return render(request, 'app_users/account.html', context)
 
 
 def user_profile(request, pk):
     profile = Profile.objects.get(id=pk)
-    
+
     context = {
         'profile': profile,
         'dev_skills': profile.skill_set.exclude(description=""),
         'other_skills': profile.skill_set.filter(description=""),
-        
+
     }
     return render(request, 'app_users/profile_detail.html', context)
 
