@@ -11,11 +11,11 @@
             </div>
 
             <div class="hero-section__search">
-                <form class="form" action="#" method="get">
+                <form class="form" action="" method="get">
                     <div class="form__field">
                         <label for="formInput#search">Search Developers </label>
-                        <input class="input input--text" id="formInput#search" type="text" name="text"
-                               placeholder="Search by developer name"/>
+                        <input class="input input--text" id="formInput#search" type="text" name="query"
+                               placeholder="Search by developer name" value="{{ query }}" />
                     </div>
 
                     <input class="btn btn--sub btn--lg" type="submit" value="Search"/>
@@ -27,7 +27,7 @@
     <section class="devlist">
         <div class="container">
             <div class="grid grid--three">
-                {% for profile in profiles %}
+                {% for profile in all_profiles %}
                 <div class="column card">
                     <div class="dev">
                         <a href="{% url 'profile' profile.id %}" class="card__body">
@@ -57,6 +57,8 @@
                         </a>
                     </div>
                 </div>
+                {% empty %}
+                <small style="display: block; width:100%; text-align: center;">No one found by your request "{{ query }}"</small>
                 {% endfor %}
             </div>
         </div>

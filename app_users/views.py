@@ -10,22 +10,16 @@ from django.views.generic import CreateView, DetailView, TemplateView, UpdateVie
 from .forms import SkillForm, UserRegistrationForm, UserAccountForm, MessageForm
 from .models import Skill, Profile, Message
 
+from .utils import developers_search
+
 
 def developers(request):
     # profiles = Profile.objects.all()
-    profiles = Profile.objects.exclude(
-        Q(fullname=None) |
-        Q(fullname="") |
-        Q(short_intro=None) |
-        Q(short_intro="") |
-        Q(bio=None) |
-        Q(bio="") |
-        Q(location=None) |
-        Q(location="")
-    ).order_by("created")
+    all_profiles, query = developers_search(request)
 
     context = {
-        "profiles": profiles,
+        "all_profiles": all_profiles,
+        "query": query,
     }
     return render(request, 'app_users/developers.html', context)
 

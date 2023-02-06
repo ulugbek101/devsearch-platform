@@ -9,7 +9,7 @@ def profile_create_on_user_create(sender, instance, created, **kwargs):
     if created:
         profile = Profile.objects.create(
             user=instance,
-            fullname=f'{instance.first_name} {instance.last_name}' if instance.first_name.strip() != '' and instance.last_name.strip() != '' else '',
+            fullname=f'{instance.first_name} {instance.last_name}' if instance.first_name.strip() and instance.last_name else '',
             email=instance.email,
         )
         profile.save()

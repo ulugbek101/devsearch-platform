@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env.get('DJANGO_SECRET_KEY', "django-insecure-b9$ipn31xqwp)sdz^+2xfnf5*k501k94t8r!9_#v)+%s7_#95h")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.get('DEBUG', True)
+DEBUG = env.get('DEBUG', False)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'dev-search.up.railway.app']
 
@@ -82,23 +82,23 @@ WSGI_APPLICATION = 'DEVSEARCH.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env.get('PGDATABASE'),
-        'HOST': env.get('PGHOST'),
-        'PORT': env.get('PGPORT'),
-        'USER': env.get('PGUSER'),
-        'PASSWORD': env.get('PGPASSWORD'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env.get('PGDATABASE'),
+#         'HOST': env.get('PGHOST'),
+#         'PORT': env.get('PGPORT'),
+#         'USER': env.get('PGUSER'),
+#         'PASSWORD': env.get('PGPASSWORD'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

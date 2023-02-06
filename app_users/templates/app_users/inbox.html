@@ -4,13 +4,14 @@
 
 <main class="inbox my-xl">
     <div class="content-box">
+        {% if recieved_messages.count > 0 %}
         <h3 class="inbox__title">New Messages(<span>{{ unread_messages }}</span>)</h3>
         <ul class="messages">
             {% for message in recieved_messages %}
             <li class="message {% if not message.is_read %} message--unread {% endif %}">
                 <a href="{% url 'message_detail' message.id %}">
                     <span class="message__author">
-                        {{ message.fullname }}
+                        {{ message.sender.get_fullname }}
                     </span>
                     <span class="message__subject">{{ message.subject }}</span>
                     <span class="message__date">
@@ -22,6 +23,9 @@
             </li>
             {% endfor %}
         </ul>
+        {% else %}
+        <h4 style="text-align: center;">There is no any messages yet ☹️</h4>
+        {% endif %}
     </div>
 </main>
 
