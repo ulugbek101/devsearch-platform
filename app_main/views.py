@@ -4,13 +4,16 @@ from django.contrib.auth.decorators import login_required
 
 from . import models
 from . import forms
+from .utils import project_search
 
 
 def projects(request):
-    all_projects = models.Project.objects.all().order_by('-created')
+    query = request.GET.get('query') if request.GET.get('query') else ''
+    all_projects, query = project_search(request, query)
 
     context = {
         'projects': all_projects,
+        'query': query,
     }
     return render(request, 'app_main/projects.html', context)
 
