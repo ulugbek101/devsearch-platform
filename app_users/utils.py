@@ -1,6 +1,5 @@
 from django.db.models import Q
 from app_users.models import Skill, Profile
-from app_main.models import Project
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -29,7 +28,7 @@ def developers_search(request):
     return all_profiles, query
 
 
-def generate_pages(request, queryset: Profile | Project):
+def generate_pages(request, queryset):
     page = 1
     if request.GET.get(f'page'):
         page = request.GET.get(f'page')
