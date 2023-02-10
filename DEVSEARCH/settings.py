@@ -1,9 +1,11 @@
 from pathlib import Path
 
-from dotenv import load_dotenv, dotenv_values
+from environs import Env
 
-load_dotenv()
-env = dotenv_values('.env')
+env = Env()
+env.read_env()
+
+from os import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,10 +14,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.get('DJANGO_SECRET_KEY', 'django-insecure-b9$ipn31xqwp)sdz^+2xfnf5*k501k94t8r!9_#v)+%s7_#95h')
+SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.get('DEBUG', False)
+DEBUG = env.str('DEBUG', False)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'dev-search.up.railway.app']
 
@@ -92,11 +94,11 @@ WSGI_APPLICATION = 'DEVSEARCH.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env.get('PGDATABASE'),
-        'HOST': env.get('PGHOST'),
-        'PORT': env.get('PGPORT'),
-        'USER': env.get('PGUSER'),
-        'PASSWORD': env.get('PGPASSWORD'),
+        'NAME': env.str('PGDATABASE'),
+        'HOST': env.str('PGHOST'),
+        'PORT': env.str('PGPORT'),
+        'USER': env.str('PGUSER'),
+        'PASSWORD': env.str('PGPASSWORD'),
     }
 }
 
@@ -121,9 +123,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = env.get('LANGUAGE_CODE', 'en-us')
+LANGUAGE_CODE = env.str('LANGUAGE_CODE', 'en-us')
 
-TIME_ZONE = env.get('TIME_ZONE', 'Europe/Istanbul')
+TIME_ZONE = env.str('TIME_ZONE', 'Europe/Istanbul')
 
 USE_I18N = True
 
@@ -146,8 +148,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env.get('EMAIL_HOST_USER')
-EMAIL_USER_PASSWORD = env.get('EMAIL_USER_PASSWORD')
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+EMAIL_USER_PASSWORD = env.str('EMAIL_USER_PASSWORD')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
