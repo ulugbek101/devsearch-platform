@@ -82,23 +82,23 @@ WSGI_APPLICATION = 'DEVSEARCH.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': env.get('PGDATABASE'),
-#         'HOST': env.get('PGHOST'),
-#         'PORT': env.get('PGPORT'),
-#         'USER': env.get('PGUSER'),
-#         'PASSWORD': env.get('PGPASSWORD'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env.get('PGDATABASE'),
+        'HOST': env.get('PGHOST'),
+        'PORT': env.get('PGPORT'),
+        'USER': env.get('PGUSER'),
+        'PASSWORD': env.get('PGPASSWORD'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
