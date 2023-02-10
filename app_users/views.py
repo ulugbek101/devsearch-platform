@@ -10,16 +10,18 @@ from django.views.generic import CreateView, DetailView, TemplateView, UpdateVie
 from .forms import SkillForm, UserRegistrationForm, UserAccountForm, MessageForm
 from .models import Skill, Profile, Message
 
-from .utils import developers_search
+from .utils import developers_search, generate_pages
 
 
 def developers(request):
     # profiles = Profile.objects.all()
     all_profiles, query = developers_search(request)
+    all_profiles, custom_range = generate_pages(request, all_profiles)
 
     context = {
         "all_profiles": all_profiles,
         "query": query,
+        "custom_range": custom_range,
     }
     return render(request, 'app_users/developers.html', context)
 

@@ -27,9 +27,6 @@ class Project(models.Model):
     def comments_count(self):
         return self.review_set.all().count()
 
-    class Meta:
-        ordering = ('-created',)
-
 
 class Tag(models.Model):
     name = models.CharField(max_length=200)
@@ -57,7 +54,6 @@ class Review(models.Model):
 
     class Meta:
         ordering = ('-created',)
-
 
 # class Vote(models.Model):
 #     VOTE_TYPE = (

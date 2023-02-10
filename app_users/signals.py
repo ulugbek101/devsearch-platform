@@ -1,7 +1,11 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
+
 from .models import Profile
+
 
 
 @receiver(signal=post_save, sender=User)
@@ -13,6 +17,16 @@ def profile_create_on_user_create(sender, instance, created, **kwargs):
             email=instance.email,
         )
         profile.save()
+
+        subject = 'Welcome to DevSearch!'
+        message = 'We are glad to see you there'
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[profile.email],
+            fail_silently=True,
+        )
 
 
 @receiver(signal=post_save, sender=Profile)

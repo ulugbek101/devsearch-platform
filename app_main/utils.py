@@ -4,7 +4,7 @@ from django.db.models import Q
 
 
 def project_search(request, query):
-    all_projects = Project.objects.all().order_by('-created')
+    all_projects = Project.objects.all().order_by('created')
     tags = Tag.objects.filter(
         Q(name__icontains=query)
     )

@@ -64,7 +64,7 @@
         </div>
     </section>
 
-    {% include 'components/_pagination.html' %}
+    {% include 'components/_pagination.html' with queryset=all_profiles custom_range=custom_range %}
 </main>
 
 {% endblock content %}

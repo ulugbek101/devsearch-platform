@@ -5,15 +5,18 @@ from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
 from .utils import project_search
+from app_users.utils import generate_pages
 
 
 def projects(request):
     query = request.GET.get('query') if request.GET.get('query') else ''
     all_projects, query = project_search(request, query)
+    all_projects, custom_range = generate_pages(request, all_projects)
 
     context = {
         'projects': all_projects,
         'query': query,
+        'custom_range': custom_range,
     }
     return render(request, 'app_main/projects.html', context)
 
