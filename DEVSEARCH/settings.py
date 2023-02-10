@@ -14,10 +14,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('DJANGO_SECRET_KEY')
+SECRET_KEY = 'django-insecure-b9$ipn31xqwp)sdz^+2xfnf5*k501k94t8r!9_#v)+%s7_#95h'  # env.str('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.str('DEBUG', False)
+DEBUG = True  # env.str('DEBUG', False)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'dev-search.up.railway.app']
 
@@ -148,8 +148,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
-EMAIL_USER_PASSWORD = env.str('EMAIL_USER_PASSWORD')
+EMAIL_HOST_USER = 'thedevu101@gmail.com'  # env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = 'mdnyedifxmkwctiq'  # env.str('EMAIL_USER_PASSWORD')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
