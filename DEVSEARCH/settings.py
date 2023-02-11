@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     # for static files
     'whitenoise',
 
+    # to store media files
+    'cloudinary_storage',
+    'cloudinary',
+
     # for api
     'rest_framework',
     'rest_framework_simplejwt',
@@ -135,10 +139,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-MEDIA_URL = 'media/'
+MEDIA_URL = 'devsearch-media/'
 
 STATIC_ROOT = BASE_DIR / 'static'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'devsearch-media'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'staticfiles'
@@ -161,3 +165,11 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env.str('CLOUD_NAME'),
+    'API_KEY': env.str('API_KEY'),
+    'API_SECRET': env.str('API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

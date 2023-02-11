@@ -10,7 +10,7 @@ class Profile(models.Model):
     short_intro = models.CharField(max_length=200, null=True, blank=True)
     location = models.CharField(max_length=200, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
-    photo = models.ImageField(default='user-default.png', upload_to='profiles/', null=True, blank=True)
+    photo = models.ImageField(default='profiles/user-default.png', upload_to='profiles/', null=True, blank=True)
     social_twitter = models.URLField(max_length=200, null=True, blank=True)
     social_instagram = models.URLField(max_length=200, null=True, blank=True)
     social_facebook = models.URLField(max_length=200, null=True, blank=True)

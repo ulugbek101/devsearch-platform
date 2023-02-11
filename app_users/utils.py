@@ -24,7 +24,6 @@ def developers_search(request):
         Q(short_intro__icontains=query) |
         Q(skill__in=skills)
     ).distinct()
-    print(all_profiles, query)
     return all_profiles, query
 
 

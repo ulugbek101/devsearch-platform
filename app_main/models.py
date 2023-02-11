@@ -9,7 +9,7 @@ class Project(models.Model):
     owner = models.ForeignKey(to=Profile, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    photo = models.ImageField(default='project-default.jpg', upload_to='projects/')
+    photo = models.ImageField(default='projects/project-default.jpg', upload_to='projects/')
     demo_link = models.URLField(max_length=2000, null=True, blank=True)
     source_link = models.URLField(max_length=2000, null=True, blank=True)
     tags = models.ManyToManyField(to='Tag')
