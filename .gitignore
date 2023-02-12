@@ -1,5 +1,6 @@
 # Custom ignoring folders and files
 DevSearch-Theme
+datadump.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
